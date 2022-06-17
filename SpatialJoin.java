@@ -50,7 +50,7 @@ public class SpatialJoin {
 					// <"rectangle", (rectID, rectX1, rectY1, rectX2, rectY2)>
 					System.out.println("rectangle: " + rectX1 + " " + rectY1 + " " + rectX2 + " " + rectY2);
 					System.out.println(value.toString());
-					context.write(new Text("rectangle"), new Text(Integer.toString(rectID) + "," + Integer.toString(rectX1) + "," + Integer.toString(rectY1) +
+					context.write(new Text(""), new Text(Integer.toString(rectID) + "," + Integer.toString(rectX1) + "," + Integer.toString(rectY1) +
 							"," + Integer.toString(rectX2) + "," + Integer.toString(rectY2)));
 				}
 			}
@@ -63,7 +63,7 @@ public class SpatialJoin {
 					System.out.println("point: " + pointX + " " + pointY);
 					System.out.println(value.toString());
 					// <"point", (pointX, pointY)>
-					context.write(new Text("point"), new Text(Integer.toString(pointX) + "," + Integer.toString(pointY)));
+					context.write(new Text(""), new Text(Integer.toString(pointX) + "," + Integer.toString(pointY)));
 				}
 			}
 		}
@@ -100,7 +100,7 @@ public class SpatialJoin {
                     if (pointX >= rectX1 && pointX <= rectX2 && pointY >= rectY1 && pointY <= rectY2) {
                     	System.out.println("point: " + pointX + " " + pointY);
                     	// <rectID, (x,y)>
-                        context.write(new Text(rectID), new Text("(" + Integer.toString(pointX) + "," + Integer.toString(pointY)));
+                        context.write(new Text(rectID), new Text("(" + Integer.toString(pointX) + "," + Integer.toString(pointY) + ")"));
                     }
                 }
             }
