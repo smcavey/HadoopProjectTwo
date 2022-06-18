@@ -48,8 +48,6 @@ public class SpatialJoin {
 				int rectY2 = rectY1 + height;
 				if(rectX1 >= windowX1 && rectX2 <= windowX2 && rectY1 >= windowY1 && rectY2 <= windowY2) {
 					// <"rectangle", (rectID, rectX1, rectY1, rectX2, rectY2)>
-					System.out.println("rectangle: " + rectX1 + " " + rectY1 + " " + rectX2 + " " + rectY2);
-					System.out.println(value.toString());
 					context.write(new Text(""), new Text(Integer.toString(rectID) + "," + Integer.toString(rectX1) + "," + Integer.toString(rectY1) +
 							"," + Integer.toString(rectX2) + "," + Integer.toString(rectY2)));
 				}
@@ -60,8 +58,6 @@ public class SpatialJoin {
 				int pointX = Integer.valueOf(data[1]);
 				int pointY = Integer.valueOf(data[2]);
 				if(pointX >= windowX1 && pointX <= windowX2 && pointY >= windowY1 && pointY <= windowY2) {
-					System.out.println("point: " + pointX + " " + pointY);
-					System.out.println(value.toString());
 					// <"point", (pointX, pointY)>
 					context.write(new Text(""), new Text(Integer.toString(pointX) + "," + Integer.toString(pointY)));
 				}
@@ -76,10 +72,8 @@ public class SpatialJoin {
             while (value.iterator().hasNext()) {
                 String inp = value.iterator().next().toString();
                 if (inp.split(",").length == 5) {
-                	System.out.println("map rectangle values: " + inp);
                 	rectangles.add(inp);
                 } else {
-                	System.out.println("map point values: " + inp);
                 	points.add(inp);
                 }
             }
@@ -90,15 +84,11 @@ public class SpatialJoin {
                 int rectY1 = Integer.valueOf(rectValues[2]);
                 int rectX2 = Integer.valueOf(rectValues[3]);
                 int rectY2 = Integer.valueOf(rectValues[4]);
-                System.out.println("rectangle: " + rectX1 + " " + rectY1 + " " + rectX2 + " " + rectY2);
-                System.out.println(points.toString());
                 for (String point:points) {
-                	System.out.println("am i here?");
                     String[] pointValues = point.split(",");
                     int pointX = Integer.valueOf(pointValues[0]);
                     int pointY = Integer.valueOf(pointValues[1]);
                     if (pointX >= rectX1 && pointX <= rectX2 && pointY >= rectY1 && pointY <= rectY2) {
-                    	System.out.println("point: " + pointX + " " + pointY);
                     	// <rectID, (x,y)>
                         context.write(new Text(rectID), new Text("(" + Integer.toString(pointX) + "," + Integer.toString(pointY) + ")"));
                     }
